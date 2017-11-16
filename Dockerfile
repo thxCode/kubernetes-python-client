@@ -20,7 +20,7 @@ LABEL \
 	io.github.thxcode.license="MIT" \
 	io.github.thxcode.docker.dockerfile="/Dockerfile"
 
-ENV KUBE_CLIENT_VERSION="4.0.0a1" \
+ENV KUBE_CLIENT_VERSION="4.0.0b1" \
 	KUBE_WS_PATCH_VERSION="2.0.98"
 	
 RUN apk add --update --no-cache \
