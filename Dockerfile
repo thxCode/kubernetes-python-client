@@ -20,13 +20,25 @@ LABEL \
 	io.github.thxcode.license="MIT" \
 	io.github.thxcode.docker.dockerfile="/Dockerfile"
 
-ENV KUBE_CLIENT_VERSION="4.0.0b1" \
+ENV KUBE_CLIENT_VERSION="4.0.0" \
 	KUBE_WS_PATCH_VERSION="2.0.98"
 	
 RUN apk add --update --no-cache \
-	dumb-init bash sudo \
-	python python-dev py-pip \
-	&& rm -fr /var/cache/apk/* \
-	&& pip install passlib kubernetes==${KUBE_CLIENT_VERSION} kubernetes-ws-patch==${KUBE_WS_PATCH_VERSION}
+		dumb-init \
+		bash \
+		sudo \
+		python \
+	&& apk add --no-cache --virtual=build-dependencies \
+		python-dev \
+		py-pip \
+	&& pip install --no-cache-dir -U \
+		passlib \
+		kubernetes==${KUBE_CLIENT_VERSION} \
+		kubernetes-ws-patch==${KUBE_WS_PATCH_VERSION} \
+	&& apk del --purge build-dependencies \
+	&& rm -fr \
+		/var/cache/apk/* \
+		/root/.cache \
+		/tmp/*
 
 CMD ["/bin/bash"]
